@@ -1,0 +1,5 @@
+<root>
+    <item name='org.apache.poi.hmef.Attachment'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

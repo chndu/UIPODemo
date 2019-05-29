@@ -1,8 +1,6 @@
 package com.crm.qa.testcases;
 
-import java.io.File;
-import java.io.IOException;
-
+import com.crm.qa.base.TestBase;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -13,17 +11,20 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class FreeCrmTest {
+import java.io.File;
+import java.io.IOException;
+
+public class FreeCrmTest extends TestBase {
 
 	static WebDriver driver;
 	static JavascriptExecutor js;
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-		System.setProperty("webdriver.chrome.driver", "/Users/naveenkhunteta/Downloads/chromedriver");
-		driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver", "D:\\work\\driver\\chromedriver.exe");
+		driver = (WebDriver) new ChromeDriver();
 		js = (JavascriptExecutor) driver;
-		driver.get("https://www.freecrm.com/index.html");
+		driver.get(prop.getProperty("url"));
 	}
 
 	@Test
@@ -32,7 +33,7 @@ public class FreeCrmTest {
 		System.out.println("title is: " + title);
 		getRunTimeInfoMessage("info", title);
 
-		if (title.equals("Free CRM software in the cloud powers sales and customer serviceQQQQ")) {
+		if (title.equals("xxxxxxxxx")) {
 			getRunTimeInfoMessage("info", "title is correct!! YAY!!!");
 			Assert.assertTrue(true);
 		} else {
@@ -83,7 +84,7 @@ public class FreeCrmTest {
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		// now copy the screenshot to desired location using copyFile //method
 		FileUtils.copyFile(src, 
-				new File("/Users/NaveenKhunteta/Documents/MyPOMFramework/PageObjectModel/screenshots/" + fileName +".png"));
+				new File("D:\\work\\screenshots\\" + fileName +".png"));
 
 	}
 

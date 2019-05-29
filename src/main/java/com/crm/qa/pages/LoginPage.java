@@ -1,28 +1,31 @@
 package com.crm.qa.pages;
 
-import org.openqa.selenium.JavascriptExecutor;
+import com.crm.qa.base.TestBase;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.crm.qa.base.TestBase;
-
 public class LoginPage extends TestBase{
-	
+
+	//点击登录弹出登录框
+	@FindBy(id = "login_btn")
+	WebElement loginBtn;
+
 	//Page Factory - OR:
 	@FindBy(name="username")
 	WebElement username;
 	
 	@FindBy(name="password")
 	WebElement password;
-	
-	@FindBy(xpath="//input[@type='submit']")
-	WebElement loginBtn;
+
+	//登录确认
+	@FindBy(id="login-submit")
+	WebElement loginSubmit;
 	
 	@FindBy(xpath="//button[contains(text(),'Sign Up')]")
 	WebElement signUpBtn;
 	
-	@FindBy(xpath="//img[contains(@class,'img-responsive')]")
+	@FindBy(xpath="//*[@id=\"homeHeader\"]/a")
 	WebElement crmLogo;
 	
 	//Initializing the Page Objects:
@@ -40,11 +43,11 @@ public class LoginPage extends TestBase{
 	}
 	
 	public HomePage login(String un, String pwd){
+		loginBtn.click();
 		username.sendKeys(un);
 		password.sendKeys(pwd);
-		//loginBtn.click();
-		    	JavascriptExecutor js = (JavascriptExecutor)driver;
-		    	js.executeScript("arguments[0].click();", loginBtn);
+		loginSubmit.click();
+
 		    	
 		return new HomePage();
 	}

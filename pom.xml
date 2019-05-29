@@ -3,17 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>FreeCRMTestAutomation</groupId>
-	<artifactId>FreeCRMTest</artifactId>
+	<artifactId>LoginPageTest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>FreeCRMTest</name>
+	<name>LoginPageTest</name>
+
 	<url>http://maven.apache.org</url>
+
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		 <maven.compiler.source>1.6</maven.compiler.source>
-                  <maven.compiler.target>1.6</maven.compiler.target>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<allure.version>1.5.4</allure.version>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -27,7 +32,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.11</version>
+			<version>6.14.3</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -83,7 +88,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-scratchpad</artifactId>
-			<version>3.9</version>
+			<version>4.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -111,6 +116,78 @@
 			<version>2.6</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-ie-driver</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+
+        <!-- https://mvnrepository.com/artifact/ru.yandex.qatools.allure/allure-testng-adaptor -->
+        <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-testng-adaptor</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+
+		<!-- https://mvnrepository.com/artifact/ru.yandex.qatools.allure/allure-junit-adaptor -->
+		<dependency>
+			<groupId>ru.yandex.qatools.allure</groupId>
+			<artifactId>allure-junit-adaptor</artifactId>
+			<version>1.5.4</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
 
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M3</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<includes>**/**.java</includes>
+					<suiteXmlFiles>
+						<file>src\main\resources\testng.xml</file>
+					</suiteXmlFiles>
+
+					<!--生成allure-result的目录-->
+					<systemProperties>
+						<property>
+							<name>allure.result.directory</name>
+							<value>./target/allure-results</value>
+						</property>
+					</systemProperties>
+				</configuration>
+				<!--allure需要的aspectjweave插件-->
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>1.9.3.RC1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+
+
+		</plugins>
+	</build>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+			<plugin>
+				<groupId>ru.yandex.qatools.allure</groupId>
+				<artifactId>allure-maven-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<resultsDirectory>./target/allure-results/</resultsDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+    </reporting>
 </project>

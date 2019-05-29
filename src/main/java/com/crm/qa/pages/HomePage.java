@@ -1,73 +1,81 @@
 package com.crm.qa.pages;
 
+import com.crm.qa.base.TestBase;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.crm.qa.base.TestBase;
-
 public class HomePage extends TestBase {
 
-	@FindBy(xpath = "//td[contains(text(),'User: Naveen K')]")
+	//定位全部
+	@FindBy(xpath = "//li[1]/span")
 	@CacheLookup
-	WebElement userNameLabel;
+	WebElement allLink;
 
-	@FindBy(xpath = "//a[contains(text(),'Contacts')]")
-	WebElement contactsLink;
+	//企业名
+	@FindBy(xpath = "//li[2]/span")
+	WebElement enterpriseNameLink;
+
+	//主要人员
+	@FindBy(xpath = "//li[3]/span")
+	WebElement keypersonLink;
 	
-	@FindBy(xpath = "//a[contains(text(),'New Contact')]")
-	WebElement newContactLink;
-	
+	//产品、品牌
+	@FindBy(xpath = "//li[4]/span")
+	WebElement productLink;
 
-	@FindBy(xpath = "//a[contains(text(),'Deals')]")
-	WebElement dealsLink;
+	//联系方式
+	@FindBy(xpath = "li[5]/span")
+	WebElement contactLink;
 
-	@FindBy(xpath = "//a[contains(text(),'Tasks')]")
-	WebElement tasksLink;
+	//经营范围
+	@FindBy(xpath = "li[6]/span")
+	WebElement  businessLink;
+
+	//首页输入框
+	@FindBy(id = "searchInput")
+	WebElement inputBox;
+
+	//点击普通搜索
+	@FindBy(id = "searchBtn")
+	WebElement searchBtn;
+
+
 
 	// Initializing the Page Objects:
 	public HomePage() {
+
 		PageFactory.initElements(driver, this);
 	}
 	
 	public String verifyHomePageTitle(){
+
 		return driver.getTitle();
 	}
 	
 	
 	public boolean verifyCorrectUserName(){
-		return userNameLabel.isDisplayed();
+		return allLink.isDisplayed();
 	}
 	
-	public ContactsPage clickOnContactsLink(){
-		contactsLink.click();
+	public ContactsPage clickOnEnterpriseName(String keys) {
+		driver.navigate().refresh();
+		enterpriseNameLink.click();
+		inputBox.sendKeys(keys);
+		searchBtn.click();
 		return new ContactsPage();
 	}
-	
-	public DealsPage clickOnDealsLink(){
-		dealsLink.click();
-		return new DealsPage();
+
+	//实现二级菜单定位
+	public void  secondMenuClick(){
+		WebElement id = keypersonLink;
+		id.click();
+
+		WebElement web = id.findElement(By.xpath("二级菜单路径"));
+		web.click();
 	}
-	
-	public TasksPage clickOnTasksLink(){
-		tasksLink.click();
-		return new TasksPage();
-	}
-	
-	public void clickOnNewContactLink(){
-		Actions action = new Actions(driver);
-		action.moveToElement(contactsLink).build().perform();
-		newContactLink.click();
-		
-	}
-	
-	
-	
-	
-	
-	
-	
+
 
 }
